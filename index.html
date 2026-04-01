@@ -59,14 +59,12 @@
     .nav{
       min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:18px;
     }
-    .brand{display:flex; align-items:center; gap:14px; font-weight:800; color:var(--blue)}
-    .brand-mark{
-      width:48px; height:48px; border-radius:16px;
-      background:linear-gradient(145deg, var(--blue) 0%, var(--green) 100%);
-      color:#fff; display:grid; place-items:center; font-size:1.2rem;
-      box-shadow:var(--shadow);
+    .brand{display:flex; align-items:center; gap:14px}
+    .brand img{
+      height:auto;
+      max-height:72px;
+      width:auto;
     }
-    .brand small{display:block; color:var(--muted); font-weight:700}
     .nav-links{display:flex; flex-wrap:wrap; gap:18px; align-items:center; color:var(--muted); font-weight:700}
     .nav-links a:hover{color:var(--blue)}
 
@@ -107,12 +105,22 @@
     .mini-stat span{color:var(--muted); font-size:.95rem}
     .hero-visual{
       min-height:560px; overflow:hidden; position:relative;
-      background:
-        linear-gradient(180deg, rgba(10,31,70,.05), rgba(10,31,70,.24)),
-        url('dwra-flyer-final.jpg') center/cover no-repeat;
+      border-radius:inherit;
+    }
+    .hero-visual::before{
+      content:"";
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      border-radius:inherit;
+      background:linear-gradient(180deg, rgba(10,31,70,.08), rgba(10,31,70,.28));
+    }
+    .hero-visual img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      object-position:center 28%;
     }
     .hero-overlay{
-      position:absolute; inset:auto 18px 18px 18px;
+      position:absolute; inset:auto 18px 18px 18px; z-index:2;
       padding:18px 18px 16px;
       background:rgba(10,31,70,.72);
       color:#fff;
@@ -137,6 +145,11 @@
     }
     .about-grid{grid-template-columns:1fr 1fr}
     .media-grid{grid-template-columns:1fr 1fr}
+    .media-section-actions{
+      display:flex;
+      justify-content:center;
+      margin-top:28px;
+    }
     .contact-grid{grid-template-columns:1fr 1fr}
     .donation-grid{grid-template-columns:1.05fr .95fr}
 
@@ -163,13 +176,62 @@
 
     .photo-card{
       min-height:350px; overflow:hidden; position:relative;
-      background:url('dwra-flyer-final.jpg') center/cover no-repeat;
+      border-radius:inherit;
     }
-    .photo-card::after{
-      content:"Photos / video area";
-      position:absolute; left:18px; bottom:18px;
-      background:rgba(10,31,70,.76); color:#fff;
-      padding:10px 14px; border-radius:999px; font-weight:800; font-size:.95rem;
+    .photo-card img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      object-position:42% center;
+    }
+
+    .gallery-modal{
+      margin:0;
+      padding:20px;
+      border:none;
+      width:100vw;
+      height:100vh;
+      max-width:100vw;
+      max-height:100vh;
+      box-sizing:border-box;
+      background:transparent;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .gallery-modal::backdrop{
+      background:rgba(12,32,70,.58);
+      backdrop-filter:blur(6px);
+    }
+    .gallery-modal-panel{
+      position:relative;
+      width:min(1040px, 100%);
+      max-height:min(92vh, 900px);
+      overflow:auto;
+      padding:22px 22px 24px;
+      background:rgba(255,255,255,.96);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:0 28px 80px rgba(12,32,70,.28);
+    }
+    .gallery-modal-title{
+      margin:0 0 16px;
+      font-size:clamp(1.25rem, 2.5vw, 1.6rem);
+      color:#103168;
+      line-height:1.2;
+    }
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+      gap:12px;
+    }
+    .gallery-grid img{
+      width:100%;
+      height:auto;
+      aspect-ratio:1;
+      object-fit:cover;
+      border-radius:14px;
+      border:1px solid var(--line);
     }
 
     .donation-wrap{
@@ -248,11 +310,12 @@
   <header>
     <div class="container nav">
       <div class="brand">
-        <div class="brand-mark">❤</div>
-        <div>
-          DWRA Foundation
-          <small>Diaspora Works and Relief Agency</small>
-        </div>
+        <img
+          src="assets/logo-pic.png"
+          alt="Diaspora Works and Relief Agency (DWRA) — shield, globe, and heart logo"
+          width="200"
+          height="200"
+        />
       </div>
 
       <nav class="nav-links">
@@ -298,6 +361,14 @@
         </div>
 
         <div class="card hero-visual">
+          <img
+            src="assets/top-pic.jpeg"
+            alt="Mother and child with community members at a DWRA outreach in Ghana"
+            width="800"
+            height="1200"
+            loading="eager"
+            decoding="async"
+          />
           <div class="hero-overlay">
             <strong>Together, we can protect children and restore hope.</strong><br />
             Every donation can make healthcare more reachable.
@@ -381,27 +452,50 @@
     </section>
 
     <section id="media">
-      <div class="container media-grid">
-        <div class="card photo-card"></div>
+      <div class="container">
+        <div class="media-grid">
+          <div class="card photo-card">
+            <img
+              src="assets/media-pic.jpeg"
+              alt="Community member in a wheelchair during a DWRA outreach visit"
+              width="800"
+              height="1200"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
 
-        <div class="card panel">
-          <div class="section-head" style="margin-bottom:14px;">
-            <span class="eyebrow">Photos and video</span>
-            <h2 style="font-size:clamp(1.5rem,2.4vw,2.2rem);">Real images make the mission stronger.</h2>
-            <p>
-              This section can later be updated with a logo, more nonprofit images, community outreach photos,
-              founder video, or beneficiary updates. For now, it shows the intended placement and style.
+          <div class="card panel">
+            <div class="section-head" style="margin-bottom:14px;">
+              <span class="eyebrow">Photos and video</span>
+              <h2 style="font-size:clamp(1.5rem,2.4vw,2.2rem);">Real images make the mission stronger.</h2>
+              <p>
+                This section can later be updated with a logo, more nonprofit images, community outreach photos,
+                founder video, or beneficiary updates. For now, it shows the intended placement and style.
+              </p>
+            </div>
+            <ul class="list">
+              <li>Logo placement in the header and footer</li>
+              <li>Photo gallery or impact visuals</li>
+              <li>Short welcome or mission video</li>
+              <li>Optional testimonials or partner logos</li>
+            </ul>
+            <p class="note" style="margin-top:14px;">
+              If you send a logo and additional images, this mockup can be updated to look much more final before you send it out.
             </p>
           </div>
-          <ul class="list">
-            <li>Logo placement in the header and footer</li>
-            <li>Photo gallery or impact visuals</li>
-            <li>Short welcome or mission video</li>
-            <li>Optional testimonials or partner logos</li>
-          </ul>
-          <p class="note" style="margin-top:14px;">
-            If you send a logo and additional images, this mockup can be updated to look much more final before you send it out.
-          </p>
+        </div>
+
+        <div class="media-section-actions">
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="open-photo-gallery"
+            aria-haspopup="dialog"
+            aria-controls="photo-gallery-modal"
+          >
+            View more
+          </button>
         </div>
       </div>
     </section>
@@ -509,5 +603,42 @@
       DWRA Foundation landing page mockup. Donation buttons are placeholders until real Stripe and PayPal links are connected.
     </div>
   </footer>
+
+  <dialog id="photo-gallery-modal" class="gallery-modal" aria-labelledby="gallery-modal-title" aria-modal="true">
+    <div class="gallery-modal-panel">
+      <h2 id="gallery-modal-title" class="gallery-modal-title">Outreach photo gallery</h2>
+      <div class="gallery-grid">
+        <img src="assets/pic1.jpeg" alt="Outreach photo 1" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic2.jpeg" alt="Outreach photo 2" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic3.jpeg" alt="Outreach photo 3" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic4.jpeg" alt="Outreach photo 4" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic5.jpeg" alt="Outreach photo 5" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic6.jpeg" alt="Outreach photo 6" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic7.jpeg" alt="Outreach photo 7" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic8.jpeg" alt="Outreach photo 8" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic9.jpeg" alt="Outreach photo 9" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic10.jpeg" alt="Outreach photo 10" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic11.jpeg" alt="Outreach photo 11" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic12.jpeg" alt="Outreach photo 12" loading="lazy" decoding="async" width="400" height="400" />
+        <img src="assets/pic13.jpeg" alt="Outreach photo 13" loading="lazy" decoding="async" width="400" height="400" />
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      var modal = document.getElementById("photo-gallery-modal");
+      var openBtn = document.getElementById("open-photo-gallery");
+      if (!modal || !openBtn) return;
+
+      openBtn.addEventListener("click", function () {
+        modal.showModal();
+      });
+
+      modal.addEventListener("click", function (e) {
+        if (e.target === modal) modal.close();
+      });
+    })();
+  </script>
 </body>
 </html>
