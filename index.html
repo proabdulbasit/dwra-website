@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DWRA Foundation | Health Insurance for Children</title>
+  <meta name="description" content="DWRA Foundation helps provide free health insurance and medical access for children in Ghana." />
+  <style>
+    :root{
+      --blue:#153b85;
+      --blue-2:#204d9b;
+      --green:#2f8d46;
+      --gold:#d3a326;
+      --text:#1d2735;
+      --muted:#5c6977;
+      --bg:#f4f8fc;
+      --white:#ffffff;
+      --line:rgba(21,59,133,.10);
+      --shadow:0 18px 50px rgba(18,40,76,.12);
+      --radius:24px;
+      --max:1160px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(47,141,70,.08), transparent 28%),
+        linear-gradient(180deg, #f8fbfe 0%, #eff5fb 100%);
+      line-height:1.6;
+    }
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(var(--max), calc(100% - 32px)); margin:0 auto}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      min-height:52px; padding:0 22px; border-radius:999px; font-weight:800;
+      transition:.2s ease; border:none; cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--blue); color:#fff; box-shadow:0 12px 28px rgba(21,59,133,.20)}
+    .btn-primary:hover{background:#102f69}
+    .btn-secondary{background:#fff; color:var(--blue); border:1px solid var(--line)}
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 14px; border-radius:999px;
+      background:rgba(47,141,70,.10); color:var(--green);
+      font-size:.92rem; font-weight:800;
+    }
+
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:blur(16px);
+      background:rgba(248,251,254,.86);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:18px;
+    }
+    .brand{display:flex; align-items:center; gap:14px; font-weight:800; color:var(--blue)}
+    .brand-mark{
+      width:48px; height:48px; border-radius:16px;
+      background:linear-gradient(145deg, var(--blue) 0%, var(--green) 100%);
+      color:#fff; display:grid; place-items:center; font-size:1.2rem;
+      box-shadow:var(--shadow);
+    }
+    .brand small{display:block; color:var(--muted); font-weight:700}
+    .nav-links{display:flex; flex-wrap:wrap; gap:18px; align-items:center; color:var(--muted); font-weight:700}
+    .nav-links a:hover{color:var(--blue)}
+
+    .hero{padding:56px 0 34px}
+    .hero-grid{
+      display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center;
+    }
+    .card{
+      background:rgba(255,255,255,.80);
+      border:1px solid var(--line);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+    }
+    .hero-copy{padding:34px}
+    h1{
+      margin:16px 0 16px;
+      font-size:clamp(2.3rem, 5vw, 4.5rem);
+      line-height:.98;
+      letter-spacing:-.03em;
+      color:#103168;
+    }
+    .accent{color:var(--green)}
+    .lead{
+      color:var(--muted);
+      font-size:1.06rem;
+      max-width:58ch;
+      margin:0 0 24px;
+    }
+    .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:26px}
+    .mini-stats{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+    }
+    .mini-stat{
+      padding:16px; border:1px solid var(--line); border-radius:18px;
+      background:linear-gradient(180deg, #fff, #f4f8fd);
+    }
+    .mini-stat strong{display:block; color:var(--blue); font-size:1.15rem; margin-bottom:4px}
+    .mini-stat span{color:var(--muted); font-size:.95rem}
+    .hero-visual{
+      min-height:560px; overflow:hidden; position:relative;
+      background:
+        linear-gradient(180deg, rgba(10,31,70,.05), rgba(10,31,70,.24)),
+        url('dwra-flyer-final.jpg') center/cover no-repeat;
+    }
+    .hero-overlay{
+      position:absolute; inset:auto 18px 18px 18px;
+      padding:18px 18px 16px;
+      background:rgba(10,31,70,.72);
+      color:#fff;
+      border-radius:22px;
+      backdrop-filter:blur(10px);
+    }
+    .hero-overlay strong{font-size:1.05rem}
+
+    section{padding:32px 0}
+    .section-head{margin-bottom:20px}
+    .section-head h2{
+      margin:10px 0 10px;
+      font-size:clamp(1.8rem, 3vw, 2.8rem);
+      line-height:1.06;
+      color:#103168;
+      letter-spacing:-.02em;
+    }
+    .section-head p{margin:0; max-width:66ch; color:var(--muted)}
+
+    .about-grid, .media-grid, .contact-grid, .donation-grid{
+      display:grid; gap:20px;
+    }
+    .about-grid{grid-template-columns:1fr 1fr}
+    .media-grid{grid-template-columns:1fr 1fr}
+    .contact-grid{grid-template-columns:1fr 1fr}
+    .donation-grid{grid-template-columns:1.05fr .95fr}
+
+    .panel{padding:28px}
+    .panel h3{margin:0 0 10px; color:var(--blue)}
+    .panel p{margin:0 0 12px; color:var(--muted)}
+    .list{margin:0; padding-left:18px; color:var(--muted)}
+
+    .impact-grid{
+      display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+    }
+    .impact{
+      padding:24px 20px; border-radius:24px; border:1px solid var(--line);
+      background:linear-gradient(180deg, #fff 0%, #f5f9fd 100%);
+      box-shadow:var(--shadow);
+    }
+    .icon{
+      width:56px; height:56px; border-radius:18px;
+      display:grid; place-items:center; font-size:1.45rem;
+      background:rgba(47,141,70,.12); margin-bottom:14px;
+    }
+    .impact h3{margin:0 0 8px; color:var(--blue); font-size:1.05rem}
+    .impact p{margin:0; color:var(--muted); font-size:.96rem}
+
+    .photo-card{
+      min-height:350px; overflow:hidden; position:relative;
+      background:url('dwra-flyer-final.jpg') center/cover no-repeat;
+    }
+    .photo-card::after{
+      content:"Photos / video area";
+      position:absolute; left:18px; bottom:18px;
+      background:rgba(10,31,70,.76); color:#fff;
+      padding:10px 14px; border-radius:999px; font-weight:800; font-size:.95rem;
+    }
+
+    .donation-wrap{
+      padding:30px;
+      border-radius:32px;
+      background:linear-gradient(135deg, #123270 0%, #1d4d95 60%, #2f8d46 130%);
+      color:#fff;
+      box-shadow:var(--shadow);
+    }
+    .donation-wrap h2{color:#fff; margin:12px 0 10px}
+    .donation-wrap p{color:rgba(255,255,255,.85)}
+    .amounts{
+      display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 16px;
+    }
+    .amount{
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.10);
+      border-radius:18px; text-align:center; padding:14px; font-weight:800;
+    }
+    .pay-box{
+      padding:24px; border-radius:24px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .pay-buttons{display:grid; gap:12px; margin:12px 0 18px}
+    .pay-buttons a{
+      display:block; background:#fff; color:var(--blue);
+      border-radius:999px; min-height:50px; line-height:50px; text-align:center; font-weight:800;
+    }
+    .alt-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    .alt{
+      padding:16px; border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.13);
+    }
+    .alt small{display:block; opacity:.78; margin-bottom:4px}
+
+    .contact-list{list-style:none; margin:10px 0 0; padding:0}
+    .contact-list li{
+      padding:10px 0; border-bottom:1px solid var(--line); color:var(--muted)
+    }
+
+    .footer-cta{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+      padding:24px 26px;
+      border-radius:24px;
+      background:linear-gradient(90deg, rgba(47,141,70,.10), rgba(21,59,133,.08));
+      border:1px solid var(--line);
+    }
+
+    footer{padding:32px 0 54px; color:var(--muted); font-size:.95rem}
+
+    .note{
+      font-size:.92rem; color:var(--muted)
+    }
+
+    @media (max-width: 980px){
+      .hero-grid, .about-grid, .media-grid, .contact-grid, .donation-grid{grid-template-columns:1fr}
+      .impact-grid{grid-template-columns:repeat(2,1fr)}
+      .hero-visual{min-height:420px}
+      .amounts{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media (max-width: 680px){
+      .nav{padding:10px 0; align-items:flex-start}
+      .nav-links{gap:12px; font-size:.92rem}
+      .hero{padding-top:26px}
+      .hero-copy, .panel, .donation-wrap{padding:22px}
+      .mini-stats, .impact-grid, .alt-grid{grid-template-columns:1fr}
+      .amounts{grid-template-columns:1fr 1fr}
+      .hero-visual{min-height:340px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark">❤</div>
+        <div>
+          DWRA Foundation
+          <small>Diaspora Works and Relief Agency</small>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#impact">Impact</a>
+        <a href="#media">Media</a>
+        <a href="#donate">Donate</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="card hero-copy">
+          <span class="eyebrow">Supporting children in Ghana</span>
+          <h1>Help us provide <span class="accent">free health insurance</span> for children.</h1>
+          <p class="lead">
+            DWRA Foundation is a nonprofit organization committed to helping children in Ghana gain
+            access to health insurance, medical treatment, and a healthier future.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#donate">Donate Now</a>
+            <a class="btn btn-secondary" href="#about">Learn More</a>
+          </div>
+
+          <div class="mini-stats">
+            <div class="mini-stat">
+              <strong>Health Coverage</strong>
+              <span>Help make care accessible for children in need.</span>
+            </div>
+            <div class="mini-stat">
+              <strong>Medical Support</strong>
+              <span>Support treatment, checkups, and urgent care access.</span>
+            </div>
+            <div class="mini-stat">
+              <strong>Future Hope</strong>
+              <span>Healthier children have stronger futures.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card hero-visual">
+          <div class="hero-overlay">
+            <strong>Together, we can protect children and restore hope.</strong><br />
+            Every donation can make healthcare more reachable.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">About DWRA</span>
+          <h2>A clean one-page nonprofit site built to explain the mission and drive donations.</h2>
+          <p>
+            This version is structured as the final mockup to send to a Fiverr developer. It shows how the
+            finished landing page should look and what sections should be included once fully built and connected.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="card panel">
+            <h3>Who we are</h3>
+            <p>
+              Diaspora Works and Relief Agency (DWRA Foundation) is a nonprofit organization in the United States
+              supporting children in Ghana by helping provide free health insurance and better access to medical care.
+            </p>
+            <p>
+              The goal is to protect children from preventable illness, reduce barriers to treatment, and create a
+              stronger foundation for long-term health and well-being.
+            </p>
+          </div>
+
+          <div class="card panel">
+            <h3>What this site should do</h3>
+            <ul class="list">
+              <li>Clearly explain the nonprofit’s mission</li>
+              <li>Show impact in a simple and trustworthy way</li>
+              <li>Accept donations through Stripe and PayPal</li>
+              <li>Also list Cash App and Zelle as extra options</li>
+              <li>Include photos and later video content</li>
+              <li>Work smoothly on phone, tablet, and desktop</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="impact">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Your donation can</span>
+          <h2>Turn compassion into practical help.</h2>
+          <p>
+            This section takes the flyer’s key ideas and turns them into clean website cards that build trust quickly.
+          </p>
+        </div>
+
+        <div class="impact-grid">
+          <div class="impact">
+            <div class="icon">❤</div>
+            <h3>Provide free health insurance</h3>
+            <p>Help children receive the healthcare coverage they need.</p>
+          </div>
+          <div class="impact">
+            <div class="icon">🩺</div>
+            <h3>Cover essential treatments</h3>
+            <p>Support doctor visits, treatment needs, and timely intervention.</p>
+          </div>
+          <div class="impact">
+            <div class="icon">🛡️</div>
+            <h3>Protect children from illness</h3>
+            <p>Reduce the risk of untreated conditions becoming lifelong problems.</p>
+          </div>
+          <div class="impact">
+            <div class="icon">🌱</div>
+            <h3>Invest in a better future</h3>
+            <p>Healthy children are more able to grow, learn, and thrive.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="media">
+      <div class="container media-grid">
+        <div class="card photo-card"></div>
+
+        <div class="card panel">
+          <div class="section-head" style="margin-bottom:14px;">
+            <span class="eyebrow">Photos and video</span>
+            <h2 style="font-size:clamp(1.5rem,2.4vw,2.2rem);">Real images make the mission stronger.</h2>
+            <p>
+              This section can later be updated with a logo, more nonprofit images, community outreach photos,
+              founder video, or beneficiary updates. For now, it shows the intended placement and style.
+            </p>
+          </div>
+          <ul class="list">
+            <li>Logo placement in the header and footer</li>
+            <li>Photo gallery or impact visuals</li>
+            <li>Short welcome or mission video</li>
+            <li>Optional testimonials or partner logos</li>
+          </ul>
+          <p class="note" style="margin-top:14px;">
+            If you send a logo and additional images, this mockup can be updated to look much more final before you send it out.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="donate">
+      <div class="container">
+        <div class="donation-wrap">
+          <div class="donation-grid">
+            <div>
+              <span class="eyebrow" style="background:rgba(255,255,255,.14); color:#fff;">Donate today</span>
+              <h2>Your kindness today can secure a healthier tomorrow.</h2>
+              <p>
+                Stripe and PayPal should be the main donation methods. Cash App and Zelle should remain available
+                underneath as secondary giving options.
+              </p>
+
+              <div class="amounts">
+                <div class="amount">$10</div>
+                <div class="amount">$25</div>
+                <div class="amount">$50</div>
+                <div class="amount">$100</div>
+              </div>
+
+              <p>
+                The developer should replace the placeholder buttons with real payment links and make sure everything works
+                cleanly on desktop and mobile.
+              </p>
+            </div>
+
+            <div class="pay-box">
+              <h3 style="margin-top:0; color:#fff;">Ways to give</h3>
+              <div class="pay-buttons">
+                <a href="#">Donate with Stripe</a>
+                <a href="#">Donate with PayPal</a>
+              </div>
+
+              <p style="margin:0 0 10px;"><strong>Other ways to give</strong></p>
+              <div class="alt-grid">
+                <div class="alt">
+                  <small>Cash App</small>
+                  <strong>$dwragh</strong>
+                </div>
+                <div class="alt">
+                  <small>Zelle</small>
+                  <strong>dwragh</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Contact</span>
+          <h2>Keep the final section simple and trustworthy.</h2>
+          <p>
+            This gives visitors one more confidence point before they leave the page and also makes the nonprofit look more established.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="card panel">
+            <h3>Contact information</h3>
+            <ul class="contact-list">
+              <li><strong>Contact:</strong> Dr. Sam Osei Tutu</li>
+              <li><strong>Phone:</strong> 559-767-1593</li>
+              <li><strong>Organization:</strong> DWRA Foundation</li>
+              <li><strong>Mission:</strong> Supporting children in Ghana through healthcare access</li>
+            </ul>
+          </div>
+
+          <div class="card panel">
+            <h3>Developer notes</h3>
+            <p>
+              This file is meant to show the final design direction. The Fiverr developer should turn this into
+              a live working website, connect real donation links, preserve the design quality, and hand over full access.
+            </p>
+            <p>
+              The site can be deployed on Vercel, WordPress, or Wix depending on the workflow, but ownership and edit access
+              should remain with you after delivery.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="footer-cta">
+          <div>
+            <strong style="display:block; color:var(--blue); font-size:1.08rem;">This is the final mockup to send out.</strong>
+            <span class="note">Use this file to show the layout, feel, and expected structure of the finished site.</span>
+          </div>
+          <a class="btn btn-primary" href="#donate">View Donation Section</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      DWRA Foundation landing page mockup. Donation buttons are placeholders until real Stripe and PayPal links are connected.
+    </div>
+  </footer>
+</body>
+</html>
