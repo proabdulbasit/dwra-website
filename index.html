@@ -139,6 +139,7 @@
       letter-spacing:-.02em;
     }
     .section-head p{margin:0; max-width:66ch; color:var(--muted)}
+    .section-head p + p{margin-top:14px}
 
     .about-grid, .media-grid, .contact-grid, .donation-grid{
       display:grid; gap:20px;
@@ -157,6 +158,32 @@
     .panel h3{margin:0 0 10px; color:var(--blue)}
     .panel p{margin:0 0 12px; color:var(--muted)}
     .list{margin:0; padding-left:18px; color:var(--muted)}
+
+    .testimonials-panel .testimonial-kicker{
+      margin:0 0 12px;
+      font-weight:800;
+      color:var(--blue);
+      font-size:.98rem;
+    }
+    .testimonials-panel blockquote{
+      margin:0 0 12px;
+      padding:0;
+      border:none;
+    }
+    .testimonials-panel blockquote p{
+      margin:0;
+      color:var(--text);
+      font-size:1.05rem;
+      line-height:1.55;
+    }
+    .testimonials-panel .testimonial-by{margin:0; color:var(--muted); font-weight:700; font-size:.96rem}
+    .testimonials-panel .testimonial-sep{
+      margin:20px 0;
+      text-align:center;
+      color:rgba(92,105,119,.45);
+      font-size:1rem;
+      letter-spacing:.12em;
+    }
 
     .impact-grid{
       display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
@@ -185,7 +212,8 @@
       object-position:42% center;
     }
 
-    .gallery-modal{
+    /* Only style when open — a bare .gallery-modal { display:flex } overrides UA display:none and shows the dialog in-page */
+    .gallery-modal[open]{
       margin:0;
       padding:20px;
       border:none;
@@ -381,10 +409,14 @@
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">About DWRA</span>
-          <h2>A clean one-page nonprofit site built to explain the mission and drive donations.</h2>
+          <h2>Providing access to healthcare for children who need it most.</h2>
           <p>
-            This version is structured as the final mockup to send to a Fiverr developer. It shows how the
-            finished landing page should look and what sections should be included once fully built and connected.
+            Diaspora Works and Relief Agency (DWRA Foundation) is a nonprofit organization dedicated to supporting
+            children in Ghana by helping provide access to health insurance and essential medical care.
+          </p>
+          <p>
+            Through the generosity of donors, we are working to remove barriers to treatment, protect children from
+            preventable illness, and create a healthier future for the next generation.
           </p>
         </div>
 
@@ -422,7 +454,8 @@
           <span class="eyebrow">Your donation can</span>
           <h2>Turn compassion into practical help.</h2>
           <p>
-            This section takes the flyer’s key ideas and turns them into clean website cards that build trust quickly.
+            Your support creates real, life-changing impact. Every donation helps protect a child, support treatment,
+            and build a healthier future.
           </p>
         </div>
 
@@ -465,24 +498,47 @@
             />
           </div>
 
-          <div class="card panel">
-            <div class="section-head" style="margin-bottom:14px;">
-              <span class="eyebrow">Photos and video</span>
-              <h2 style="font-size:clamp(1.5rem,2.4vw,2.2rem);">Real images make the mission stronger.</h2>
-              <p>
-                This section can later be updated with a logo, more nonprofit images, community outreach photos,
-                founder video, or beneficiary updates. For now, it shows the intended placement and style.
-              </p>
+          <div class="card panel testimonials-panel">
+            <div class="section-head" style="margin-bottom:18px;">
+              <h2 style="font-size:clamp(1.5rem,2.4vw,2.2rem); margin:0;">Testimonials 💬</h2>
             </div>
-            <ul class="list">
-              <li>Logo placement in the header and footer</li>
-              <li>Photo gallery or impact visuals</li>
-              <li>Short welcome or mission video</li>
-              <li>Optional testimonials or partner logos</li>
-            </ul>
-            <p class="note" style="margin-top:14px;">
-              If you send a logo and additional images, this mockup can be updated to look much more final before you send it out.
-            </p>
+
+            <div class="testimonial-block">
+              <p class="testimonial-kicker">Testimonial 1</p>
+              <blockquote>
+                <p>
+                  “Because of this support, my child was able to receive medical care we could not afford. This has given
+                  us hope for the future.”
+                </p>
+              </blockquote>
+              <p class="testimonial-by">— Parent, Ghana</p>
+            </div>
+
+            <p class="testimonial-sep" role="presentation">⸻</p>
+
+            <div class="testimonial-block">
+              <p class="testimonial-kicker">💬 Testimonial 2</p>
+              <blockquote>
+                <p>
+                  “We didn’t know how we would pay for treatment. Through this help, my child received care and is now
+                  doing better.”
+                </p>
+              </blockquote>
+              <p class="testimonial-by">— Family, Ghana</p>
+            </div>
+
+            <p class="testimonial-sep" role="presentation">⸻</p>
+
+            <div class="testimonial-block">
+              <p class="testimonial-kicker">💬 Testimonial 3</p>
+              <blockquote>
+                <p>
+                  “This support is changing lives in our community. Children are healthier and families are filled with
+                  hope again.”
+                </p>
+              </blockquote>
+              <p class="testimonial-by">— Community Member</p>
+            </div>
           </div>
         </div>
 
@@ -553,9 +609,9 @@
       <div class="container">
         <div class="section-head">
           <span class="eyebrow">Contact</span>
-          <h2>Keep the final section simple and trustworthy.</h2>
+          <h2>Get in touch</h2>
           <p>
-            This gives visitors one more confidence point before they leave the page and also makes the nonprofit look more established.
+            We’re here to answer your questions and help you get involved.
           </p>
         </div>
 
@@ -571,14 +627,13 @@
           </div>
 
           <div class="card panel">
-            <h3>Developer notes</h3>
+            <h3>Why your support matters</h3>
             <p>
-              This file is meant to show the final design direction. The Fiverr developer should turn this into
-              a live working website, connect real donation links, preserve the design quality, and hand over full access.
+              Your generosity helps provide access to healthcare, protect children from preventable illness, and create
+              opportunities for a healthier future.
             </p>
             <p>
-              The site can be deployed on Vercel, WordPress, or Wix depending on the workflow, but ownership and edit access
-              should remain with you after delivery.
+              Every contribution, no matter the size, makes a meaningful difference in a child’s life.
             </p>
           </div>
         </div>
@@ -589,8 +644,8 @@
       <div class="container">
         <div class="footer-cta">
           <div>
-            <strong style="display:block; color:var(--blue); font-size:1.08rem;">This is the final mockup to send out.</strong>
-            <span class="note">Use this file to show the layout, feel, and expected structure of the finished site.</span>
+            <strong style="display:block; color:var(--blue); font-size:1.08rem;">Together we can make a lasting impact</strong>
+            <span class="note">Thank you for support</span>
           </div>
           <a class="btn btn-primary" href="#donate">View Donation Section</a>
         </div>
