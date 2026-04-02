@@ -40,6 +40,7 @@
       transition:.2s ease; border:none; cursor:pointer;
     }
     .btn:hover{transform:translateY(-1px)}
+    .btn:disabled{transform:none; cursor:not-allowed; opacity:.82}
     .btn-primary{background:var(--blue); color:#fff; box-shadow:0 12px 28px rgba(21,59,133,.20)}
     .btn-primary:hover{background:#102f69}
     .btn-secondary{background:#fff; color:var(--blue); border:1px solid var(--line)}
@@ -275,19 +276,87 @@
       display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0 16px;
     }
     .amount{
+      appearance:none;
+      width:100%;
       border:1px solid rgba(255,255,255,.18);
       background:rgba(255,255,255,.10);
-      border-radius:18px; text-align:center; padding:14px; font-weight:800;
+      color:#fff;
+      border-radius:18px;
+      text-align:center;
+      padding:14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:background .2s ease, border-color .2s ease, transform .2s ease;
     }
+    .amount:hover{transform:translateY(-1px); background:rgba(255,255,255,.16)}
+    .amount.is-selected{
+      background:#fff;
+      color:var(--blue);
+      border-color:#fff;
+      box-shadow:0 14px 28px rgba(7,21,48,.18);
+    }
+    .amount:focus-visible,
+    .donation-input input:focus-visible,
+    .pay-buttons button:focus-visible{
+      outline:3px solid rgba(255,255,255,.40);
+      outline-offset:2px;
+    }
+    .donation-form{display:grid; gap:14px}
+    .donation-input{
+      display:grid;
+      gap:8px;
+      margin-bottom:2px;
+    }
+    .donation-input span{
+      font-size:.95rem;
+      font-weight:700;
+      color:rgba(255,255,255,.90);
+    }
+    .donation-input input{
+      width:100%;
+      min-height:54px;
+      padding:0 16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.10);
+      color:#fff;
+      font:inherit;
+    }
+    .donation-input input::placeholder{color:rgba(255,255,255,.62)}
+    .donation-submit{width:100%}
+    .donation-help{
+      margin:0;
+      font-size:.93rem;
+      color:rgba(255,255,255,.84);
+    }
+    .donation-feedback{
+      min-height:24px;
+      margin:0;
+      font-size:.95rem;
+      font-weight:700;
+      color:#fff;
+    }
+    .donation-feedback.is-info{color:#dbe8ff}
+    .donation-feedback.is-success{color:#d5ffd9}
+    .donation-feedback.is-error{color:#ffd9d9}
     .pay-box{
       padding:24px; border-radius:24px;
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.14);
     }
     .pay-buttons{display:grid; gap:12px; margin:12px 0 18px}
-    .pay-buttons a{
+    .pay-buttons a,
+    .pay-buttons button{
       display:block; background:#fff; color:var(--blue);
+      border:none;
+      width:100%;
       border-radius:999px; min-height:50px; line-height:50px; text-align:center; font-weight:800;
+      font:inherit;
+    }
+    .pay-buttons button[disabled]{
+      color:rgba(16,49,104,.58);
+      background:rgba(255,255,255,.75);
+      cursor:not-allowed;
     }
     .alt-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
     .alt{
@@ -296,6 +365,17 @@
       border:1px solid rgba(255,255,255,.13);
     }
     .alt small{display:block; opacity:.78; margin-bottom:4px}
+    .pay-note{
+      margin:0 0 16px;
+      font-size:.95rem;
+      color:rgba(255,255,255,.84);
+    }
+    .trust-list{
+      margin:16px 0 0;
+      padding-left:18px;
+      color:rgba(255,255,255,.86);
+    }
+    .trust-list li + li{margin-top:6px}
 
     .contact-list{list-style:none; margin:10px 0 0; padding:0}
     .contact-list li{
@@ -434,14 +514,13 @@
           </div>
 
           <div class="card panel">
-            <h3>What this site should do</h3>
+            <h3>Our mission</h3>
             <ul class="list">
-              <li>Clearly explain the nonprofit’s mission</li>
-              <li>Show impact in a simple and trustworthy way</li>
-              <li>Accept donations through Stripe and PayPal</li>
-              <li>Also list Cash App and Zelle as extra options</li>
-              <li>Include photos and later video content</li>
-              <li>Work smoothly on phone, tablet, and desktop</li>
+              <li>Provide access to health coverage for children in need</li>
+              <li>Support medical treatment and essential care</li>
+              <li>Protect children from preventable illness</li>
+              <li>Create opportunities for healthier futures</li>
+              <li>Build a community of support through generosity</li>
             </ul>
           </div>
         </div>
@@ -564,28 +643,50 @@
               <span class="eyebrow" style="background:rgba(255,255,255,.14); color:#fff;">Donate today</span>
               <h2>Your kindness today can secure a healthier tomorrow.</h2>
               <p>
-                Stripe and PayPal should be the main donation methods. Cash App and Zelle should remain available
-                underneath as secondary giving options.
+                Make a secure one-time donation with Stripe Checkout. Choose a suggested amount or enter your own, and
+                you will be redirected to Stripe's hosted payment page to complete the gift safely.
               </p>
-
-              <div class="amounts">
-                <div class="amount">$10</div>
-                <div class="amount">$25</div>
-                <div class="amount">$50</div>
-                <div class="amount">$100</div>
-              </div>
-
               <p>
-                The developer should replace the placeholder buttons with real payment links and make sure everything works
-                cleanly on desktop and mobile.
+                Every donation helps DWRA support health insurance, medical visits, and treatment access for children
+                in Ghana.
               </p>
+
+              <form id="donation-form" class="donation-form" novalidate>
+                <div class="amounts" role="group" aria-label="Suggested donation amounts">
+                  <button type="button" class="amount" data-amount="10" aria-pressed="false">$10</button>
+                  <button type="button" class="amount is-selected" data-amount="25" aria-pressed="true">$25</button>
+                  <button type="button" class="amount" data-amount="50" aria-pressed="false">$50</button>
+                  <button type="button" class="amount" data-amount="100" aria-pressed="false">$100</button>
+                </div>
+
+                <label class="donation-input" for="custom-donation-amount">
+                  <span>Custom amount (USD)</span>
+                  <input
+                    id="custom-donation-amount"
+                    name="customAmount"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    placeholder="Enter an amount, like 35 or 125.50"
+                  />
+                </label>
+
+                <button type="submit" class="btn btn-primary donation-submit" id="stripe-donate-button">
+                  Donate securely with Stripe
+                </button>
+
+                <p class="donation-help">Minimum donation is $5. Secure checkout and receipts are handled by Stripe.</p>
+                <p id="donation-feedback" class="donation-feedback" role="status" aria-live="polite"></p>
+              </form>
             </div>
 
             <div class="pay-box">
               <h3 style="margin-top:0; color:#fff;">Ways to give</h3>
+              <p class="pay-note">
+                Stripe is live now. PayPal can be added next without changing the donation experience on the page.
+              </p>
               <div class="pay-buttons">
-                <a href="#">Donate with Stripe</a>
-                <a href="#">Donate with PayPal</a>
+                <button type="button" disabled aria-disabled="true">PayPal coming soon</button>
               </div>
 
               <p style="margin:0 0 10px;"><strong>Other ways to give</strong></p>
@@ -599,6 +700,12 @@
                   <strong>dwragh</strong>
                 </div>
               </div>
+
+              <ul class="trust-list">
+                <li>Secure Stripe-hosted checkout</li>
+                <li>Optimized for desktop and mobile giving</li>
+                <li>This site does not collect card details directly</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -655,7 +762,7 @@
 
   <footer>
     <div class="container">
-      DWRA Foundation landing page mockup. Donation buttons are placeholders until real Stripe and PayPal links are connected.
+      DWRA Foundation. Secure online donations are currently processed through Stripe Checkout.
     </div>
   </footer>
 
@@ -680,6 +787,7 @@
     </div>
   </dialog>
 
+  <script src="assets/site-config.js"></script>
   <script>
     (function () {
       var modal = document.getElementById("photo-gallery-modal");
@@ -693,6 +801,272 @@
       modal.addEventListener("click", function (e) {
         if (e.target === modal) modal.close();
       });
+    })();
+
+    (function () {
+      var donationForm = document.getElementById("donation-form");
+      if (!donationForm) return;
+
+      var siteConfig = window.DWRA_SITE_CONFIG || {};
+      var apiBaseUrl =
+        typeof siteConfig.apiBaseUrl === "string"
+          ? siteConfig.apiBaseUrl.trim().replace(/\/+$/, "")
+          : "";
+      var stripePaymentLinkUrl =
+        typeof siteConfig.stripePaymentLinkUrl === "string"
+          ? siteConfig.stripePaymentLinkUrl.trim()
+          : "";
+      var presetButtons = Array.prototype.slice.call(
+        donationForm.querySelectorAll(".amount")
+      );
+      var customAmountInput = document.getElementById("custom-donation-amount");
+      var donateButton = document.getElementById("stripe-donate-button");
+      var feedback = document.getElementById("donation-feedback");
+
+      function createError(message, code) {
+        var error = new Error(message);
+        error.code = code;
+        return error;
+      }
+
+      function setFeedback(message, type) {
+        if (!feedback) return;
+        feedback.textContent = message || "";
+        feedback.className = "donation-feedback" + (type ? " is-" + type : "");
+      }
+
+      function setSelectedButton(selectedButton) {
+        presetButtons.forEach(function (button) {
+          var isSelected = button === selectedButton;
+          button.classList.toggle("is-selected", isSelected);
+          button.setAttribute("aria-pressed", isSelected ? "true" : "false");
+        });
+      }
+
+      function parseUsdToCents(rawValue) {
+        var value = String(rawValue || "").trim();
+        if (!value) return null;
+        if (!/^\d+(\.\d{1,2})?$/.test(value)) return null;
+
+        var parts = value.split(".");
+        var dollars = Number(parts[0]);
+        var cents = Number((parts[1] || "").padEnd(2, "0"));
+        return dollars * 100 + cents;
+      }
+
+      function formatUsd(cents) {
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD"
+        }).format(cents / 100);
+      }
+
+      function getSelectedAmountCents() {
+        var customAmount = parseUsdToCents(customAmountInput.value);
+        if (customAmountInput.value.trim()) {
+          return customAmount;
+        }
+
+        var activeButton = donationForm.querySelector(".amount.is-selected");
+        if (!activeButton) return null;
+        return parseUsdToCents(activeButton.getAttribute("data-amount"));
+      }
+
+      function clearQueryState() {
+        var url = new URL(window.location.href);
+        url.searchParams.delete("donation");
+        url.searchParams.delete("session_id");
+        var nextUrl = url.pathname + url.search + url.hash;
+        window.history.replaceState({}, document.title, nextUrl);
+      }
+
+      function buildApiUrl(path) {
+        return (apiBaseUrl || "") + path;
+      }
+
+      async function readJsonResponse(response) {
+        var text = await response.text();
+        var contentType = response.headers.get("content-type") || "";
+        var isJson = contentType.indexOf("application/json") !== -1;
+        var backendUnavailable =
+          response.status === 404 || response.status === 405 || response.status === 501;
+
+        if (!text) {
+          if (!response.ok) {
+            if (backendUnavailable) {
+              throw createError(
+                "Donation checkout backend is unavailable here.",
+                "backend_unavailable"
+              );
+            }
+
+            throw createError("The donation service returned an empty response.");
+          }
+
+          return {};
+        }
+
+        if (!isJson) {
+          if (backendUnavailable) {
+            throw createError(
+              "Donation checkout backend is unavailable here.",
+              "backend_unavailable"
+            );
+          }
+
+          throw createError("The donation service returned an unexpected response.");
+        }
+
+        try {
+          return JSON.parse(text);
+        } catch (_error) {
+          throw createError("The donation service returned invalid data.");
+        }
+      }
+
+      function redirectToPaymentLink() {
+        if (!stripePaymentLinkUrl) {
+          return false;
+        }
+
+        donateButton.disabled = true;
+        donateButton.textContent = "Opening Stripe donation page...";
+        setFeedback(
+          "Opening Stripe's hosted donation page. You can confirm or edit the amount there.",
+          "info"
+        );
+
+        window.setTimeout(function () {
+          window.location.href = stripePaymentLinkUrl;
+        }, 150);
+
+        return true;
+      }
+
+      async function loadDonationState() {
+        var params = new URLSearchParams(window.location.search);
+        var state = params.get("donation");
+
+        if (state === "cancel") {
+          setFeedback(
+            "Donation checkout was canceled. You can choose another amount whenever you're ready.",
+            "info"
+          );
+          clearQueryState();
+          return;
+        }
+
+        if (state !== "success") return;
+
+        var sessionId = params.get("session_id");
+        if (!sessionId) {
+          setFeedback(
+            "Thanks for your support. If you completed a donation, check your email for the Stripe receipt.",
+            "success"
+          );
+          clearQueryState();
+          return;
+        }
+
+        setFeedback("Confirming your donation...", "info");
+
+        try {
+          var response = await fetch(
+            buildApiUrl("/api/donations/session-status?session_id=" + encodeURIComponent(sessionId)),
+            {
+              headers: {
+                "Accept": "application/json"
+              }
+            }
+          );
+          var data = await readJsonResponse(response);
+
+          if (!response.ok || data.paymentStatus !== "paid") {
+            throw new Error(data.error || "Unable to verify the donation.");
+          }
+
+          setFeedback(
+            "Thank you. Your " + formatUsd(data.amountTotalCents) + " donation was received successfully.",
+            "success"
+          );
+        } catch (error) {
+          setFeedback(
+            error.message || "We couldn't verify the donation yet. Please check your receipt email.",
+            "error"
+          );
+        } finally {
+          clearQueryState();
+        }
+      }
+
+      presetButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          customAmountInput.value = "";
+          setSelectedButton(button);
+          setFeedback("", "");
+        });
+      });
+
+      customAmountInput.addEventListener("input", function () {
+        if (customAmountInput.value.trim()) {
+          setSelectedButton(null);
+        } else {
+          setSelectedButton(presetButtons[1] || null);
+        }
+        setFeedback("", "");
+      });
+
+      donationForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        var amountCents = getSelectedAmountCents();
+        if (!amountCents) {
+          setFeedback("Enter a valid donation amount in dollars and cents.", "error");
+          return;
+        }
+
+        if (amountCents < 500 || amountCents > 500000) {
+          setFeedback("Choose a donation amount between $5 and $5,000.", "error");
+          return;
+        }
+
+        donateButton.disabled = true;
+        donateButton.textContent = "Redirecting to secure checkout...";
+        setFeedback("Opening secure Stripe Checkout for " + formatUsd(amountCents) + "...", "info");
+
+        try {
+          var response = await fetch(buildApiUrl("/api/donations/checkout-session"), {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              amountCents: amountCents
+            })
+          });
+
+          var data = await readJsonResponse(response);
+          if (!response.ok || !data.url) {
+            throw new Error(data.error || "Unable to start checkout.");
+          }
+
+          window.location.href = data.url;
+        } catch (error) {
+          if (error && error.code === "backend_unavailable" && redirectToPaymentLink()) {
+            return;
+          }
+
+          donateButton.disabled = false;
+          donateButton.textContent = "Donate securely with Stripe";
+          setFeedback(
+            error.message || "We couldn't start the donation checkout. Please try again.",
+            "error"
+          );
+        }
+      });
+
+      loadDonationState();
     })();
   </script>
 </body>
