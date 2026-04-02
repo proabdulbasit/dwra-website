@@ -141,6 +141,8 @@
     }
     .section-head p{margin:0; max-width:66ch; color:var(--muted)}
     .section-head p + p{margin-top:14px}
+    /* About: let intro copy use full column width (avoid a short measure + empty space on the right) */
+    #about .section-head p{max-width:none}
 
     .about-grid, .media-grid, .contact-grid, .donation-grid{
       display:grid; gap:20px;
@@ -440,7 +442,7 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="card hero-copy">
-          <span class="eyebrow">Supporting children in Ghana</span>
+          <span class="eyebrow">Supporting children</span>
           <h1>Help us provide <span class="accent">free health insurance</span> for children.</h1>
           <p class="lead">
             DWRA Foundation is a nonprofit organization committed to helping children gain
@@ -647,8 +649,7 @@
                 you will be redirected to Stripe's hosted payment page to complete the gift safely.
               </p>
               <p>
-                Every donation helps DWRA support health insurance, medical visits, and treatment access for children
-                in Ghana.
+                Every donation helps DWRA support health insurance, medical visits, and treatment access for children.
               </p>
 
               <form id="donation-form" class="donation-form" novalidate>
@@ -729,7 +730,7 @@
               <li><strong>Contact:</strong> Dr. Sam Osei Tutu</li>
               <li><strong>Phone:</strong> 559-767-1593</li>
               <li><strong>Organization:</strong> DWRA Foundation</li>
-              <li><strong>Mission:</strong> Supporting children in Ghana through healthcare access</li>
+              <li><strong>Mission:</strong> Supporting children through healthcare access</li>
               <li><strong>Address:</strong> 3438 smith lane, Clovis CA 93628</li>
               <li><strong>Email:</strong> dwragh@gmail.com</li>
             </ul>
